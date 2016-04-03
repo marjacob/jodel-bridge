@@ -1,0 +1,10 @@
+# Dependencies
+flask
+
+# Testing
+coverage
+green
+pylint
+
+# Required
+pip
