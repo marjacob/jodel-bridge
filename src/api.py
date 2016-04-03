@@ -139,7 +139,8 @@ class Jodel(object):
             }
         }
 
-        response = requests.post(uri, data=payload, headers=JODEL_BASE_HEADERS)
+        response = requests.post(uri, data=json.dumps(payload),
+                                 headers=JODEL_BASE_HEADERS)
         response.raise_for_status()
 
         return json.loads(response.text)
