@@ -11,15 +11,18 @@ import random
 import requests
 import string
 
-from datetime import datetime
 from enum import Enum
-from pytz import timezone
 
 
 # com.jodelapp.jodelandroidv3.api.ApiModule
 JODEL_ANALYTICS_ENDPOINT = "https://analytics.ext.go-tellm.com:443"
 JODEL_API_ENDPOINT = "https://api.go-tellm.com:443/api"
 JODEL_CLIENT_ID = "81e8a76e-1e02-4d17-9ba0-8a7020261b26"
+JODEL_BASE_HEADERS = {
+    "Connection": "keep-alive",
+    "Accept-Encoding": "gzip",
+    "Content-Type": "application/json; charset=UTF-8"
+}
 
 
 # com.jodelapp.jodelandroidv3.api.model.FlagReason
@@ -98,25 +101,45 @@ class Location(object):
         return self.__longtitude
 
 
-
-def Jodel(object):
-    def __init__(self):
+class Jodel(object):
+    def __init__(self, device=None):
+        if isinstance(device, Device):
+            self.__device = device
+        else:
+            self.__device = Device.from_random()
+    def delete_post(self, post_id):
         pass
-    def delete_post(post_id):
+    def downvote_post(self, post_id):
         pass
-    def downvote_post(post_id):
+    def flag_post(self, post_id, reason):
         pass
-    def flag_post(post_id, reason):
+    def send_post(self, location, image=None, ancestor=None):
         pass
-    def send_post(location, image=None, ancestor=None):
+    def upvote_post(self, post_id):
         pass
-    def upvote_post(post_id):
+    def get_most_discussed_posts(self, skip, latitude, longtitude, limit=10):
         pass
-    def get_most_discussed_posts(skip, latitude, longtitude, limit=10):
+    def get_most_popular_posts(self, skip, latitude, longtitude, limit=10):
         pass
-    def get_most_popular_posts(skip, latitude, longtitude, limit=10):
-        pass
-    def get_most_recent_posts(skip, latitude, longtitude, limit=10):
+    def get_most_recent_posts(self, skip, latitude, longtitude, limit=10):
         pass
     def get_request_token(self):
-        pass
+        uri = "{0}/v2/users/".format(JODEL_API_ENDPOINT)
+        payload = {
+            "client_id": "81e8a76e-1e02-4d17-9ba0-8a7020261b26",
+            "device_uid": self.__device.uid,
+            "location": {
+                "city": "Oslo",
+                "loc_coordinates": {
+                "lat": 59.9439781,
+                "lng": 10.7192413
+            },
+            "country": "NO",
+            "loc_accuracy": 40.244
+            }
+        }
+
+        response = requests.post(uri, data=payload, headers=JODEL_BASE_HEADERS)
+        response.raise_for_status()
+
+        return json.loads(response.text)
