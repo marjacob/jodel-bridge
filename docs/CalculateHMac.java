@@ -25,6 +25,7 @@ private String calculateHMac(Request paramRequest, String paramString) {
 		if (!TextUtils.isEmpty(str)) {
 			localStringBuilder.append(str.split(" ")[1]);
 		}
+
 		/* Append the current time formatted as ISO 8601 with the offset from UTC.
 		 *   - Format : "YYYY-MM-DDTHH:MM:SSZ"
 		 *   - Example: "2016-04-03T13:12:38Z" */
