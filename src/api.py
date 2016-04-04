@@ -5,24 +5,30 @@ This module contains bindings for the private API provided by Jodel at
 their RESTful endpoint.
 """
 
+# Standard library imports.
 import hashlib
 import json
 import random
-import requests
 import string
 
+from datetime import datetime
 from enum import Enum
+
+# Third party imports.
+import requests
 
 
 # com.jodelapp.jodelandroidv3.api.ApiModule
-JODEL_ANALYTICS_ENDPOINT = "https://analytics.ext.go-tellm.com:443"
-JODEL_API_ENDPOINT = "https://api.go-tellm.com:443/api"
+JODEL_API_HOST = "api.go-tellm.com"
+JODEL_API_PORT = 443
 JODEL_CLIENT_ID = "81e8a76e-1e02-4d17-9ba0-8a7020261b26"
+JODEL_API_ENDPOINT = "https://{host}:{port}/api".format(
+    host=JODEL_API_HOST,
+    port=JODEL_API_PORT)
 JODEL_BASE_HEADERS = {
-    "Connection": "keep-alive",
     "Accept-Encoding": "gzip",
-    "Content-Type": "application/json; charset=UTF-8"
-}
+    "Connection": "keep-alive",
+    "Content-Type": "application/json; charset=UTF-8"}
 
 
 # com.jodelapp.jodelandroidv3.api.model.FlagReason
@@ -107,40 +113,58 @@ class Jodel(object):
             self.__device = device
         else:
             self.__device = Device.from_random()
+        self.__session = requests.Session()
+        self.__session.headers.update(JODEL_BASE_HEADERS)
+
     def delete_post(self, post_id):
         pass
+
     def downvote_post(self, post_id):
         pass
+
     def flag_post(self, post_id, reason):
         pass
+
     def send_post(self, location, image=None, ancestor=None):
         pass
+
     def upvote_post(self, post_id):
         pass
+
     def get_most_discussed_posts(self, skip, latitude, longtitude, limit=10):
         pass
+
     def get_most_popular_posts(self, skip, latitude, longtitude, limit=10):
         pass
+
     def get_most_recent_posts(self, skip, latitude, longtitude, limit=10):
         pass
+
     def get_request_token(self):
-        uri = "{0}/v2/users/".format(JODEL_API_ENDPOINT)
-        payload = {
+        path = "/v2/users/"
+        url = "{0}{1}".format(JODEL_API_ENDPOINT, path)
+        payload = json.dumps({
             "client_id": "81e8a76e-1e02-4d17-9ba0-8a7020261b26",
             "device_uid": self.__device.uid,
             "location": {
                 "city": "Oslo",
                 "loc_coordinates": {
-                "lat": 59.9439781,
-                "lng": 10.7192413
-            },
-            "country": "NO",
-            "loc_accuracy": 40.244
+                    "lat": 59.9439781,
+                    "lng": 10.7192413
+                },
+                "country": "NO",
+                "loc_accuracy": 40.244
             }
-        }
+        })
 
-        response = requests.post(uri, data=json.dumps(payload),
-                                 headers=JODEL_BASE_HEADERS)
+        request = requests.Request("POST", url, data=payload)
+        prepared_request = self.__session.prepare_request(request)
+
+        return self.send_request(prepared_request)
+
+    def send_request(self, request):
+        request.headers["X-Timestamp"] = datetime.utcnow().isoformat()
+        #request.headers["X-Authorization"] = compute_hmac(request)
+        response = self.__session.send(request)
         response.raise_for_status()
-
         return json.loads(response.text)
