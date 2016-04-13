@@ -1,0 +1,252 @@
+
+libhmac.so:     file format elf32-i386
+
+
+Disassembly of section .plt:
+
+000003d0 <__cxa_atexit@plt-0x10>:
+ 3d0:	ff b3 04 00 00 00    	push   DWORD PTR [ebx+0x4]
+ 3d6:	ff a3 08 00 00 00    	jmp    DWORD PTR [ebx+0x8]
+ 3dc:	00 00                	add    BYTE PTR [eax],al
+	...
+
+000003e0 <__cxa_atexit@plt>:
+ 3e0:	ff a3 0c 00 00 00    	jmp    DWORD PTR [ebx+0xc]
+ 3e6:	68 00 00 00 00       	push   0x0
+ 3eb:	e9 e0 ff ff ff       	jmp    3d0 <__cxa_atexit@plt-0x10>
+
+000003f0 <__stack_chk_fail@plt>:
+ 3f0:	ff a3 10 00 00 00    	jmp    DWORD PTR [ebx+0x10]
+ 3f6:	68 08 00 00 00       	push   0x8
+ 3fb:	e9 d0 ff ff ff       	jmp    3d0 <__cxa_atexit@plt-0x10>
+
+00000400 <__cxa_finalize@plt>:
+ 400:	ff a3 14 00 00 00    	jmp    DWORD PTR [ebx+0x14]
+ 406:	68 10 00 00 00       	push   0x10
+ 40b:	e9 c0 ff ff ff       	jmp    3d0 <__cxa_atexit@plt-0x10>
+
+00000410 <malloc@plt>:
+ 410:	ff a3 18 00 00 00    	jmp    DWORD PTR [ebx+0x18]
+ 416:	68 18 00 00 00       	push   0x18
+ 41b:	e9 b0 ff ff ff       	jmp    3d0 <__cxa_atexit@plt-0x10>
+
+Disassembly of section .text:
+
+00000420 <get_random_key-0xc0>:
+ 420:	53                   	push   ebx
+ 421:	e8 aa 00 00 00       	call   4d0 <malloc@plt+0xc0>
+ 426:	81 c3 be 1b 00 00    	add    ebx,0x1bbe
+ 42c:	8d 64 24 e8          	lea    esp,[esp-0x18]
+ 430:	8d 83 1c 00 00 00    	lea    eax,[ebx+0x1c]
+ 436:	89 04 24             	mov    DWORD PTR [esp],eax
+ 439:	e8 c2 ff ff ff       	call   400 <__cxa_finalize@plt>
+ 43e:	8d 64 24 18          	lea    esp,[esp+0x18]
+ 442:	5b                   	pop    ebx
+ 443:	c3                   	ret    
+	...
+ 450:	8d 64 24 f4          	lea    esp,[esp-0xc]
+ 454:	8b 44 24 10          	mov    eax,DWORD PTR [esp+0x10]
+ 458:	85 c0                	test   eax,eax
+ 45a:	74 02                	je     45e <malloc@plt+0x4e>
+ 45c:	ff d0                	call   eax
+ 45e:	8d 64 24 0c          	lea    esp,[esp+0xc]
+ 462:	c3                   	ret    
+ 463:	8d b6 00 00 00 00    	lea    esi,[esi+0x0]
+ 469:	8d bc 27 00 00 00 00 	lea    edi,[edi+eiz*1+0x0]
+ 470:	53                   	push   ebx
+ 471:	e8 5a 00 00 00       	call   4d0 <malloc@plt+0xc0>
+ 476:	81 c3 6e 1b 00 00    	add    ebx,0x1b6e
+ 47c:	8d 64 24 e8          	lea    esp,[esp-0x18]
+ 480:	8d 83 1c 00 00 00    	lea    eax,[ebx+0x1c]
+ 486:	89 44 24 08          	mov    DWORD PTR [esp+0x8],eax
+ 48a:	8b 44 24 20          	mov    eax,DWORD PTR [esp+0x20]
+ 48e:	89 44 24 04          	mov    DWORD PTR [esp+0x4],eax
+ 492:	8d 83 6c e4 ff ff    	lea    eax,[ebx-0x1b94]
+ 498:	89 04 24             	mov    DWORD PTR [esp],eax
+ 49b:	e8 40 ff ff ff       	call   3e0 <__cxa_atexit@plt>
+ 4a0:	8d 64 24 18          	lea    esp,[esp+0x18]
+ 4a4:	5b                   	pop    ebx
+ 4a5:	c3                   	ret    
+ 4a6:	8d 76 00             	lea    esi,[esi+0x0]
+ 4a9:	8d bc 27 00 00 00 00 	lea    edi,[edi+eiz*1+0x0]
+ 4b0:	53                   	push   ebx
+ 4b1:	e8 1a 00 00 00       	call   4d0 <malloc@plt+0xc0>
+ 4b6:	81 c3 2e 1b 00 00    	add    ebx,0x1b2e
+ 4bc:	8d 64 24 f8          	lea    esp,[esp-0x8]
+ 4c0:	e8 2b ff ff ff       	call   3f0 <__stack_chk_fail@plt>
+ 4c5:	8d 64 24 08          	lea    esp,[esp+0x8]
+ 4c9:	5b                   	pop    ebx
+ 4ca:	c3                   	ret    
+ 4cb:	90                   	nop
+ 4cc:	8d 74 26 00          	lea    esi,[esi+eiz*1+0x0]
+ 4d0:	8b 1c 24             	mov    ebx,DWORD PTR [esp]
+ 4d3:	c3                   	ret    
+ 4d4:	90                   	nop
+ 4d5:	8d b4 26 00 00 00 00 	lea    esi,[esi+eiz*1+0x0]
+ 4dc:	00 00                	add    BYTE PTR [eax],al
+	...
+
+000004e0 <get_random_key>:
+ 4e0:	e8 a0 01 00 00       	call   685 <Java_com_jodelapp_jodelandroidv3_api_HmacInterceptor_generate+0x75>
+ 4e5:	81 c1 ff 1a 00 00    	add    ecx,0x1aff
+ 4eb:	8d 81 3c 00 00 00    	lea    eax,[ecx+0x3c]
+ 4f1:	c3                   	ret    
+ 4f2:	e9 19 00 00 00       	jmp    510 <get_random_key+0x30>
+ 4f7:	90                   	nop
+ 4f8:	90                   	nop
+ 4f9:	90                   	nop
+ 4fa:	90                   	nop
+ 4fb:	90                   	nop
+ 4fc:	90                   	nop
+ 4fd:	90                   	nop
+ 4fe:	90                   	nop
+ 4ff:	90                   	nop
+ 500:	90                   	nop
+ 501:	90                   	nop
+ 502:	90                   	nop
+ 503:	90                   	nop
+ 504:	90                   	nop
+ 505:	90                   	nop
+ 506:	90                   	nop
+ 507:	90                   	nop
+ 508:	90                   	nop
+ 509:	90                   	nop
+ 50a:	90                   	nop
+ 50b:	90                   	nop
+ 50c:	90                   	nop
+ 50d:	90                   	nop
+ 50e:	90                   	nop
+ 50f:	90                   	nop
+	...
+
+00000520 <get_generated_key>:
+ 520:	56                   	push   esi
+ 521:	53                   	push   ebx
+ 522:	e8 a9 ff ff ff       	call   4d0 <malloc@plt+0xc0>
+ 527:	81 c3 bd 1a 00 00    	add    ebx,0x1abd
+ 52d:	8d 64 24 fc          	lea    esp,[esp-0x4]
+ 531:	8b 74 24 10          	mov    esi,DWORD PTR [esp+0x10]
+ 535:	e8 a6 ff ff ff       	call   4e0 <get_random_key>
+ 53a:	31 d2                	xor    edx,edx
+ 53c:	8d 74 26 00          	lea    esi,[esi+eiz*1+0x0]
+ 540:	8d 0c 10             	lea    ecx,[eax+edx*1]
+ 543:	0f b6 09             	movzx  ecx,BYTE PTR [ecx]
+ 546:	32 0c 16             	xor    cl,BYTE PTR [esi+edx*1]
+ 549:	88 8c 1a 7c 00 00 00 	mov    BYTE PTR [edx+ebx*1+0x7c],cl
+ 550:	83 c2 01             	add    edx,0x1
+ 553:	83 fa 28             	cmp    edx,0x28
+ 556:	75 e8                	jne    540 <get_generated_key+0x20>
+ 558:	8d 64 24 04          	lea    esp,[esp+0x4]
+ 55c:	8d 83 7c 00 00 00    	lea    eax,[ebx+0x7c]
+ 562:	5b                   	pop    ebx
+ 563:	5e                   	pop    esi
+ 564:	c3                   	ret    
+ 565:	e9 16 00 00 00       	jmp    580 <client_secret>
+ 56a:	90                   	nop
+ 56b:	90                   	nop
+ 56c:	90                   	nop
+ 56d:	90                   	nop
+ 56e:	90                   	nop
+ 56f:	90                   	nop
+ 570:	90                   	nop
+ 571:	90                   	nop
+ 572:	90                   	nop
+ 573:	90                   	nop
+ 574:	90                   	nop
+ 575:	90                   	nop
+ 576:	90                   	nop
+ 577:	90                   	nop
+ 578:	90                   	nop
+ 579:	90                   	nop
+ 57a:	90                   	nop
+ 57b:	90                   	nop
+ 57c:	90                   	nop
+ 57d:	90                   	nop
+ 57e:	90                   	nop
+ 57f:	90                   	nop
+
+00000580 <client_secret>:
+ 580:	55                   	push   ebp
+ 581:	57                   	push   edi
+ 582:	56                   	push   esi
+ 583:	53                   	push   ebx
+ 584:	e8 47 ff ff ff       	call   4d0 <malloc@plt+0xc0>
+ 589:	81 c3 5b 1a 00 00    	add    ebx,0x1a5b
+ 58f:	8d 64 24 d4          	lea    esp,[esp-0x2c]
+ 593:	8b 44 24 40          	mov    eax,DWORD PTR [esp+0x40]
+ 597:	89 04 24             	mov    DWORD PTR [esp],eax
+ 59a:	e8 81 ff ff ff       	call   520 <get_generated_key>
+ 59f:	c7 04 24 29 00 00 00 	mov    DWORD PTR [esp],0x29
+ 5a6:	89 44 24 1c          	mov    DWORD PTR [esp+0x1c],eax
+ 5aa:	e8 61 fe ff ff       	call   410 <malloc@plt>
+ 5af:	89 44 24 18          	mov    DWORD PTR [esp+0x18],eax
+ 5b3:	31 d2                	xor    edx,edx
+ 5b5:	8d 74 26 00          	lea    esi,[esi+eiz*1+0x0]
+ 5b9:	8d bc 27 00 00 00 00 	lea    edi,[edi+eiz*1+0x0]
+ 5c0:	8b 44 24 18          	mov    eax,DWORD PTR [esp+0x18]
+ 5c4:	89 d7                	mov    edi,edx
+ 5c6:	c1 ff 02             	sar    edi,0x2
+ 5c9:	89 d6                	mov    esi,edx
+ 5cb:	f7 d6                	not    esi
+ 5cd:	83 c2 01             	add    edx,0x1
+ 5d0:	8d 2c b8             	lea    ebp,[eax+edi*4]
+ 5d3:	83 e6 03             	and    esi,0x3
+ 5d6:	8b 44 24 1c          	mov    eax,DWORD PTR [esp+0x1c]
+ 5da:	8d 0c f5 00 00 00 00 	lea    ecx,[esi*8+0x0]
+ 5e1:	8b 3c b8             	mov    edi,DWORD PTR [eax+edi*4]
+ 5e4:	d3 ef                	shr    edi,cl
+ 5e6:	83 fa 28             	cmp    edx,0x28
+ 5e9:	89 f9                	mov    ecx,edi
+ 5eb:	88 4c 35 00          	mov    BYTE PTR [ebp+esi*1+0x0],cl
+ 5ef:	75 cf                	jne    5c0 <client_secret+0x40>
+ 5f1:	8b 44 24 18          	mov    eax,DWORD PTR [esp+0x18]
+ 5f5:	c6 40 28 00          	mov    BYTE PTR [eax+0x28],0x0
+ 5f9:	8d 64 24 2c          	lea    esp,[esp+0x2c]
+ 5fd:	5b                   	pop    ebx
+ 5fe:	5e                   	pop    esi
+ 5ff:	5f                   	pop    edi
+ 600:	5d                   	pop    ebp
+ 601:	c3                   	ret    
+ 602:	8d b4 26 00 00 00 00 	lea    esi,[esi+eiz*1+0x0]
+ 609:	8d bc 27 00 00 00 00 	lea    edi,[edi+eiz*1+0x0]
+
+00000610 <Java_com_jodelapp_jodelandroidv3_api_HmacInterceptor_generate>:
+ 610:	55                   	push   ebp
+ 611:	57                   	push   edi
+ 612:	56                   	push   esi
+ 613:	53                   	push   ebx
+ 614:	e8 b7 fe ff ff       	call   4d0 <malloc@plt+0xc0>
+ 619:	81 c3 cb 19 00 00    	add    ebx,0x19cb
+ 61f:	8d 64 24 d4          	lea    esp,[esp-0x2c]
+ 623:	8b 74 24 40          	mov    esi,DWORD PTR [esp+0x40]
+ 627:	8b 4c 24 48          	mov    ecx,DWORD PTR [esp+0x48]
+ 62b:	8b 06                	mov    eax,DWORD PTR [esi]
+ 62d:	89 4c 24 04          	mov    DWORD PTR [esp+0x4],ecx
+ 631:	89 34 24             	mov    DWORD PTR [esp],esi
+ 634:	c7 44 24 08 00 00 00 	mov    DWORD PTR [esp+0x8],0x0
+ 63b:	00 
+ 63c:	ff 90 a4 02 00 00    	call   DWORD PTR [eax+0x2a4]
+ 642:	89 c5                	mov    ebp,eax
+ 644:	8b 06                	mov    eax,DWORD PTR [esi]
+ 646:	8b b8 9c 02 00 00    	mov    edi,DWORD PTR [eax+0x29c]
+ 64c:	89 2c 24             	mov    DWORD PTR [esp],ebp
+ 64f:	e8 2c ff ff ff       	call   580 <client_secret>
+ 654:	89 44 24 04          	mov    DWORD PTR [esp+0x4],eax
+ 658:	89 34 24             	mov    DWORD PTR [esp],esi
+ 65b:	ff d7                	call   edi
+ 65d:	8b 16                	mov    edx,DWORD PTR [esi]
+ 65f:	89 6c 24 08          	mov    DWORD PTR [esp+0x8],ebp
+ 663:	89 44 24 1c          	mov    DWORD PTR [esp+0x1c],eax
+ 667:	8b 44 24 48          	mov    eax,DWORD PTR [esp+0x48]
+ 66b:	89 34 24             	mov    DWORD PTR [esp],esi
+ 66e:	89 44 24 04          	mov    DWORD PTR [esp+0x4],eax
+ 672:	ff 92 a8 02 00 00    	call   DWORD PTR [edx+0x2a8]
+ 678:	8b 44 24 1c          	mov    eax,DWORD PTR [esp+0x1c]
+ 67c:	8d 64 24 2c          	lea    esp,[esp+0x2c]
+ 680:	5b                   	pop    ebx
+ 681:	5e                   	pop    esi
+ 682:	5f                   	pop    edi
+ 683:	5d                   	pop    ebp
+ 684:	c3                   	ret    
+ 685:	8b 0c 24             	mov    ecx,DWORD PTR [esp]
+ 688:	c3                   	ret    
